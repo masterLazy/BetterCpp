@@ -1,12 +1,24 @@
 #pragma once
 
 namespace bettercpp {
-	class Number {
+	template <typename T> class Number {
+	protected:
+		T value = 0;
 	public:
-		virtual int16_t shortValue() const = 0;
-		virtual int32_t intValue() const = 0;
-		virtual int64_t longValue() const = 0;
-		virtual float floatValue() const = 0;
-		virtual double doubleValue() const = 0;
+		virtual int16_t shortValue() const{
+			return value;
+		}
+		virtual int32_t intValue() const{
+			return value;
+		}
+		virtual int64_t longValue() const{
+			return value;
+		}
+		virtual float floatValue() const{
+			return value;
+		}
+		virtual double doubleValue() const{
+			return value;
+		}
 	};
 }

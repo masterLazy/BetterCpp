@@ -1,9 +1,5 @@
 #pragma once
 
-#include "Object.hpp"
-
-#include <regex>
-
 namespace bettercpp {
 	class String :Object {
 		std::string value;
@@ -11,12 +7,11 @@ namespace bettercpp {
 	public:
 		String() {}
 		String(const std::string& value) :value(value) {}
-		// Not recommended
-		String(const char* value) :value(value) {}
-
 		operator const std::string& () const {
 			return value;
 		}
+		// Not recommended
+		String(const char* value) :value(value) {}
 
 		bool equals(const Object& anObject) const override {
 			auto* p = dynamic_cast<const String*>(&anObject);
@@ -24,20 +19,23 @@ namespace bettercpp {
 			return value == p->value;
 		}
 		int hashCode() override {
-			int h = hash;
-			if (h == 0 && value.size() > 0) {
+			if (hash == 0 && value.size() > 0) {
 				for (int i = 0; i < value.size(); i++) {
-					h = 31 * h + value[i];
+					hash = 31 * hash + value[i];
 				}
-				hash = h;
 			}
-			return h;
+			return hash;
 		}
 		std::string toString() const override {
 			return value;
 		}
 
-		/* String methods */
+		/* Custom methods */
+
+		template<typename T>
+		static String valueOf(T data) {
+			return std::to_string(data);
+		}
 
 		bool equals(const String& anotherString) const {
 			return value == anotherString.value;
@@ -128,11 +126,6 @@ namespace bettercpp {
 				value, 
 				std::regex(target.toString()), 
 				replacement.toString());
-		}
-
-		template<typename T>
-		static String valueOf(T data) {
-			return std::to_string(data);
 		}
 	};
 }
